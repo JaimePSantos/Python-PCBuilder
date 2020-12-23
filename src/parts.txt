@@ -1,0 +1,3 @@
+Processor, Intel Core i9-10900K Processor, 488
+GraphicsCard, Nvidia GeForce RTX 3080, 749
+GraphicsCard, RTX 2070 Super, 488
