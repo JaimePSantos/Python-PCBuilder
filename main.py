@@ -8,8 +8,8 @@ from moneyed import Money
 def main():
     os.chdir('src')
     fileName = 'parts.txt'
-#    builder = DatabaseBuilder(fileName) 
-#    builder.buildFile()
+    builder = DatabaseBuilder(fileName) 
+    builder.buildFile()
     pDb = PartDatabase(fileName)
     pDb.printProcessors()
     pDb.printGraphicsCards()

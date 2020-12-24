@@ -10,9 +10,12 @@ class MyMoney:
         if self.myCurrency == 'USD':
             self.moneyStringList = moneyString.split('$')
             self.myAmt = moneyStringList[1]
-        elif self.myCurrency == 'EUR':
+        elif self.myCurrency == 'EUR': 
             self.moneyStringList = moneyString.split(' ')
-            self.myAmt = self.moneyStringList[0]
+            self.myAmt = self.moneyStringList[0]  
+        else:
+            print("String: "+moneyString+"\t"+self.myCurrency + " is not a valid currency.")
+            return
         self.myMoney = Money(self.myAmt,self.myCurrency)
 
     def detectCurrency(self,moneyString):

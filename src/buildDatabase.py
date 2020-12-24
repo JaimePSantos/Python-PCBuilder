@@ -13,7 +13,8 @@ class DatabaseBuilder:
         partData = self.api.retrieve(part)
         for data in partData.values():
             for component in data:
-                partInfo +=  part + "," + component.brand + "," + component.model+","+str(component.price.amount)+"\n"
+                componentPrice = str(component.price).replace(",","")
+                partInfo +=  part + "," + component.brand + "," + component.model+","+componentPrice+"\n"
                 partList.append(partInfo)
                 partInfo = ""
         return partList 
@@ -33,11 +34,3 @@ class DatabaseBuilder:
                 f.close()
         except:
             print("%s could not be found."%fileName)
-
-
-   # api = API()
-   # cpu_data = api.retrieve("cpu")
-   # #all_data = api.retrieve_all()
-   # for data in cpu_data.values():
-   #     for cpus in data:
-   #         print(type(cpus))
