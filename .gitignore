@@ -1,0 +1,8 @@
+*~
+*.swp
+*.swo
+src/__pycache__/
+venv/
+activate
+.idea/
+.gitattributes
