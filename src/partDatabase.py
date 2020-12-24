@@ -1,5 +1,4 @@
-from src.graphCard import GraphCard
-from src.processor import Processor
+from src.pcParts import Processor, GraphCard
 import operator
 import csv
 import os
@@ -17,13 +16,25 @@ class PartDatabase:
 
     def loadFile(self,fileName):
         try:
-            with open(fileName) as f:
+            with open(fileName,'r') as f:
+                print("1")
                 lines = csv.reader(f,delimiter= ',')
+                print("2")
+                print(lines)
                 for line in lines:
-                    if("processor" in line[0].lower()):
-                        self.processors[line[1]] = line[2]
-                    if("graphics" in line[0].lower()):
-                        self.graphicsCards[line[1]] = line[2]
+#                    if("cpu" in line[0].lower()):
+#                        print(line)
+#                        self.processors[line[1]] = line[2]
+#                    if("gpu" in line[0].lower()):
+#                        print(line)
+#                        self.graphicsCards[line[1]] = line[2]
+#                    else:
+#                        print("bla") 
+#                        continue
+                    if line[0] != "gpu" and line[0]!= "cpu":
+                        print(line)
+                    else:
+                        continue
         except:
             print("%s could not be found."%fileName)
 
