@@ -20,7 +20,6 @@ class PartDatabase:
                 print("1")
                 lines = csv.reader(f,delimiter= ',')
                 print("2")
-                print(lines)
                 for line in lines:
 #                    if("cpu" in line[0].lower()):
 #                        print(line)
