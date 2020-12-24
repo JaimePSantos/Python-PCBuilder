@@ -1,5 +1,4 @@
-from src.graphCard import GraphCard
-from src.processor import Processor
+from src.pcParts import Processor, GraphCard 
 from src.partDatabase import PartDatabase
 
 class Computer:
