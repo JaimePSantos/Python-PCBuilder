@@ -2,17 +2,17 @@ from src.pcParts import Processor, GraphCard, PCPart
 import operator
 import csv
 import os
+from collections import defaultdict 
 
 class PartDatabase:
-    processors = {}
-    graphicsCards = {}
-    processorList = []
-    graphicsCardList = []
+    partsList = [] 
+    parsedFile= []
+    partsDict = {}
 
     def __init__(self,fileName):
-        self.loadFile(fileName)
-        self.buildProcessorList()
-        self.buildGraphicsCardList()
+        self.partsList = []
+        self.parsedFile = self.loadFile(fileName)
+        self.partsDict = self.buildPartDatabase(self.parsedFile)
 
     def loadFile(self,fileName):
         try:
@@ -21,53 +21,41 @@ class PartDatabase:
                 for line in lines:
                     parsedLine = line.strip()
                     parsedLine = parsedLine.split(',')
-                    if parsedLine[0]=='video-card' or parsedLine[0]=='cpu':
-                        pcPart = self.buildPart(parsedLine)
-                        print(pcPart)
+                    if self.validPart(parsedLine[0]): 
+                        self.parsedFile.append(parsedLine)
                     else:
                         continue
         except:
             print("%s could not be found."%fileName)
+        return self.parsedFile
 
-    def buildPart(self,parsedLine):
-        partType = parsedLine[0]
-        partManufacturer = parsedLine[1]
-        partModel = parsedLine[2]
-        partPrice = parsedLine[3]
-        pcPart = PCPart(partType,partModel,partPrice).makePart()
-        return pcPart
+    def buildPartDatabase(self,parsedFile):
+        partsDictAux = defaultdict(list)
+        for parsedLine in parsedFile:
+            partType = parsedLine[0]
+            partManufacturer = parsedLine[1]
+            partModel = parsedLine[2]
+            partPrice = parsedLine[3]
+            pcPart = PCPart(partType,partModel,partPrice).makePart()
+            partsDictAux[partType].append(pcPart)
+        return partsDictAux
 
-    def buildProcessorList(self):
-        for processor in self.processors:
-            proc = Processor(processor,self.processors[processor])
-            self.processorList.append(proc)
-        return self.processorList
-
-    def buildGraphicsCardList(self):
-        for graphicsCard in self.graphicsCards:
-            gc = GraphCard(graphicsCard,self.graphicsCards[graphicsCard])
-            self.graphicsCardList.append(gc)
-        return self.graphicsCardList
-
-    def sortByCheapestGraphicsCards(self):
-        cheapest = sorted(self.graphicsCardList,key=operator.attrgetter('price'))
-        for gc in cheapest:
-            gc.printGraphCard()
+    def sortByCheapest(self,part):
+        partsListAux = self.getPartList(part)
+        cheapest = sorted(partsListAux, key= operator.attrgetter('price'))
         return cheapest
 
-    def sortByCheapestProcessor(self):
-        cheapest = sorted(self.processorList,key=operator.attrgetter('price'))
-        for pu in cheapest:
-            pu.printProcessor()
-        return cheapest
+    def validPart(self,parsedLine):
+        if parsedLine=='video-card' or parsedLine=='cpu':
+            return True
+        else:
+            return False
 
-    def printProcessors(self):
-        for processor in self.processorList:
-            print(processor)
+    def getPartList(self,part):
+        return self.partsDict[part]
 
-    def printGraphicsCards(self):
-        for graphicsCard in self.graphicsCardList:
-            print(graphicsCard)
+    def getPartDict(self):
+        return self.partsDict
 
     def __str__(self):
         partString = ""

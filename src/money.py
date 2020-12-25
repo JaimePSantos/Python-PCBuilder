@@ -26,5 +26,17 @@ class MyMoney:
         else:
             return 'Undefined'
 
+    def __lt__(self,other):
+        if  self.myMoney < other.myMoney:
+            return True
+        else:
+            return False
+
+    def __gt__(self,other):
+        if  self.myMoney > other.myMoney:
+            return True
+        else:
+            return False
+
     def __str__(self):
         return str(self.myMoney)

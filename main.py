@@ -4,6 +4,7 @@ from src.money import MyMoney
 import os
 from pcpartpicker import API
 from moneyed import Money
+from collections import defaultdict
 
 def main():
     os.chdir('src')
@@ -11,9 +12,11 @@ def main():
     builder = DatabaseBuilder(fileName) 
     builder.buildFile()
     pDb = PartDatabase(fileName)
-    pDb.printProcessors()
-    pDb.printGraphicsCards()
-    #print(pDb)
+    test = defaultdict(list)
+    partsDict = pDb.getPartDict()
+    partsList = pDb.sortByCheapest('cpu')
+    for cpu in partsList:
+        print(cpu)
     # print(pDb.sortByCheapestGraphicsCards())
 
 if __name__ == '__main__':
